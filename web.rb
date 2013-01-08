@@ -5,7 +5,6 @@ get '/' do
 end
 
 get '/redirect' do
-	puts params
 	"Redirecting!"
 end
 
@@ -22,5 +21,5 @@ get '/push' do
 end
 
 get '/test' do
-	puts params
+	params
 end
