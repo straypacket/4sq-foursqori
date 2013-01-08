@@ -38,6 +38,6 @@ get '/test' do
   	rep = open(req).read
   	rep_j = JSON.parse(rep)
   	access_token = rep_j['access_token']
-  	"aha!"
+  	access_token
   	#redirect '/success'
 end
