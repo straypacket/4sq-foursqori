@@ -15,3 +15,7 @@ end
 get '/privacy' do
 	"Private means private :)"
 end
+
+get '/push' do
+	"Pushing ..."
+end
