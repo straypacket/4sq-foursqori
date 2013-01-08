@@ -1,10 +1,11 @@
 require 'sinatra'
 
 get '/' do
-  "Nothing to see, move along"
+	"Nothing to see, move along"
 end
 
 get '/redirect' do
+	puts params
 	"Redirecting!"
 end
 
@@ -18,4 +19,8 @@ end
 
 get '/push' do
 	"Pushing ..."
+end
+
+get '/test' do
+	puts params
 end
