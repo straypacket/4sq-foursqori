@@ -28,5 +28,5 @@ get '/test' do
 
 	# Make request with params[:code]
 	req = "https://foursquare.com/oauth2/access_token?client_id=#{cli_id}&client_secret=#{cli_sec}&grant_type=authorization_code&redirect_uri=#{red_uri}&code=#{params[:code]}"
-  	open('http://maps.google.com/maps/api/staticmap').read
+  	open(req).read
 end
