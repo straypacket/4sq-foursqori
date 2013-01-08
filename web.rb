@@ -1,6 +1,6 @@
 require 'sinatra'
 require 'open-uri'
-require 'JSON'
+require 'json'
 
 get '/' do
 	"Nothing to see, move along"
