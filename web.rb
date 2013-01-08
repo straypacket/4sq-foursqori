@@ -7,3 +7,7 @@ end
 get '/redirect' do
 	"Redirecting!"
 end
+
+get '/callback' do
+	"Callback ..."
+end
