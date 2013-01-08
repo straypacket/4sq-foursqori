@@ -1,5 +1,9 @@
 require 'sinatra'
 
 get '/' do
-  "Hello, world"
+  "Nothing to see, move along"
+end
+
+get '/redirect' do
+	"Redirecting!"
 end
