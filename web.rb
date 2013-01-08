@@ -11,3 +11,7 @@ end
 get '/callback' do
 	"Callback ..."
 end
+
+get '/privacy' do
+	"Private means private :)"
+end
