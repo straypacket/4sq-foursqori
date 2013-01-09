@@ -28,7 +28,7 @@ get '/callback' do
   	rep = open(req).read
   	rep_j = JSON.parse(rep)
   	access_token = rep_j['access_token']
-  	user['A1YEYC2T2MBCVEJU51HPNKZA4XLL41WQ24WMRCI0FAA5BCHS'] = access_token
+  	logger.info access_token
   	redirect '/success'
 end
 
@@ -39,7 +39,7 @@ end
 post '/push' do
 	#checkinID = "50ed174be4b0ca0b1eee4c4d"
 	checkinID = JSON.parse(params['checkin'])['id']
-	uri = URI.parse("https://api.foursquare.com/v2/checkins/#{checkinID}/addpost")
+	uri = URI.parse("https://api.foursquare.com/v2/checkins/#{checkinID}/addpost?oauth_token=ACCESS_TOKEN")
 	msg = {"text" => "Awesomeness!", "url" => "http://badger.herokuapp.com/", "contentId" => "my_ID"}
 
 	logger.info params
