@@ -26,7 +26,8 @@ get '/privacy' do
 end
 
 post '/push' do
-	"Pushing ..."
+	params
+	#{}"Pushing ..."
 end
 
 get '/success' do
