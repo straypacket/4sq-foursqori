@@ -49,7 +49,7 @@ post '/push' do
 	request.set_form_data({"text" => "Awesomeness", "url" => "http://badger.herokuapp.com/", "contentId" => "my_ID"})
 	request["Content-Type"] = "application/json"
 	response = http.request(request)
-
+	return
 end
 
 get '/success' do
