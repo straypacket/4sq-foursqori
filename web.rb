@@ -37,8 +37,8 @@ get '/privacy' do
 end
 
 post '/push' do
-	checkinID = "50ed174be4b0ca0b1eee4c4d"
-	#checkinID = JSON.parse(params['checkin'])['id']
+	#checkinID = "50ed174be4b0ca0b1eee4c4d"
+	checkinID = JSON.parse(params['checkin'])['id']
 	uri = URI.parse("https://api.foursquare.com/v2/checkins/#{checkinID}/addpost")
 	msg = {"text" => "Awesomeness!", "url" => "http://badger.herokuapp.com/", "contentId" => "my_ID"}
 
