@@ -34,7 +34,7 @@ end
 
 post '/push' do
 	logger.info params
-	logger.info params['checkin']
+	logger.info JSON.parse(params['checkin'])['id']
 	#logger.info params
 	#{}"Pushing ..."
 end
