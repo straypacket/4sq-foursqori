@@ -37,8 +37,18 @@ end
 post '/push' do
 	checkinID = JSON.parse(params['checkin'])['id']
 	uri = URI.parse("https://api.foursquare.com/v2/checkins/#{checkinID}/addpost")
-	response = Net::HTTP.post_form(uri, {"text" => "Awesomeness!", "url" => "http://badger.herokuapp.com/", "contentId" => "my_ID"})
-	"Pushed"
+	msg = {"text" => "Awesomeness!", "url" => "http://badger.herokuapp.com/", "contentId" => "my_ID"}
+
+	logger.info "https://api.foursquare.com/v2/checkins/#{checkinID}/addpost"
+	logger.info msg
+
+	http = Net::HTTP.new(uri.host, uri.port)
+	request = Net::HTTP::Post.new(uri.request_uri)
+	request.set_form_data(msg)
+	# Tweak headers, removing this will default to application/x-www-form-urlencoded 
+	request["Content-Type"] = "application/json"
+	response = http.request(request)
+
 end
 
 get '/success' do
