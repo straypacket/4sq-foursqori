@@ -6,6 +6,7 @@ require 'uri'
 use Rack::Logger
 
 access_token = ''
+user = {}
 
 helpers do
   def logger
@@ -27,6 +28,7 @@ get '/callback' do
   	rep = open(req).read
   	rep_j = JSON.parse(rep)
   	access_token = rep_j['access_token']
+  	user['A1YEYC2T2MBCVEJU51HPNKZA4XLL41WQ24WMRCI0FAA5BCHS'] = access_token
   	redirect '/success'
 end
 
@@ -35,17 +37,18 @@ get '/privacy' do
 end
 
 post '/push' do
-	checkinID = JSON.parse(params['checkin'])['id']
+	checkinID = "50ed174be4b0ca0b1eee4c4d"
+	#checkinID = JSON.parse(params['checkin'])['id']
 	uri = URI.parse("https://api.foursquare.com/v2/checkins/#{checkinID}/addpost")
 	msg = {"text" => "Awesomeness!", "url" => "http://badger.herokuapp.com/", "contentId" => "my_ID"}
 
+	logger.info params
 	logger.info "https://api.foursquare.com/v2/checkins/#{checkinID}/addpost"
 	logger.info msg
 
 	http = Net::HTTP.new(uri.host, uri.port)
 	request = Net::HTTP::Post.new(uri.request_uri)
 	request.set_form_data(msg)
-	# Tweak headers, removing this will default to application/x-www-form-urlencoded 
 	request["Content-Type"] = "application/json"
 	response = http.request(request)
 
