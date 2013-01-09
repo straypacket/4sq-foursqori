@@ -8,10 +8,6 @@ get '/' do
 	"Nothing to see, move along"
 end
 
-get '/redirect' do
-	"Redirecting!"
-end
-
 get '/callback' do
 	cli_id = "A1YEYC2T2MBCVEJU51HPNKZA4XLL41WQ24WMRCI0FAA5BCHS"
 	cli_sec = "41T5JDOD3U5DGYIUFJVWCDF1CC1NI1A3WSH51EPJHGW5E04V"
