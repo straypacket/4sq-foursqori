@@ -22,14 +22,14 @@ get '/callback' do
   	rep = open(req).read
   	rep_j = JSON.parse(rep)
   	access_token = rep_j['access_token']
-  	#redirect '/success'
+  	redirect '/success'
 end
 
 get '/privacy' do
 	"Private means private :)"
 end
 
-get '/push' do
+post '/push' do
 	"Pushing ..."
 end
 
