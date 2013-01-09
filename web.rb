@@ -33,7 +33,7 @@ get '/privacy' do
 end
 
 post '/push' do
-	params[:checkin][:id]
+	logger.info params['checkin']['id']
 	#logger.info params
 	#{}"Pushing ..."
 end
