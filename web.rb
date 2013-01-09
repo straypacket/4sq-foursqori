@@ -26,7 +26,7 @@ get '/privacy' do
 end
 
 post '/push' do
-	params
+	params[:id]
 	#{}"Pushing ..."
 end
 
