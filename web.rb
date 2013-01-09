@@ -1,8 +1,14 @@
 require 'sinatra'
 require 'open-uri'
 require 'json'
+require 'logger'
 
+enable :logging
 access_token = ''
+
+before do
+  logger.level = Logger::DEBUG
+end
 
 get '/' do
 	"Nothing to see, move along"
@@ -27,7 +33,7 @@ end
 
 post '/push' do
 	#params[:checkin][:id]
-	puts params
+	logger.debug params
 	#{}"Pushing ..."
 end
 
