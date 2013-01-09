@@ -26,7 +26,7 @@ get '/privacy' do
 end
 
 post '/push' do
-	params[:id]
+	JSON.parse(params)[:id]
 	#{}"Pushing ..."
 end
 
