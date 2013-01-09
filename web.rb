@@ -1,8 +1,15 @@
 require 'sinatra'
 require 'open-uri'
 require 'json'
+use Rack::Logger
 
 access_token = ''
+
+helpers do
+  def logger
+    request.logger
+  end
+end
 
 get '/' do
 	"Nothing to see, move along"
@@ -27,7 +34,7 @@ end
 
 post '/push' do
 	#params[:checkin][:id]
-	puts params
+	logger.info params
 	#{}"Pushing ..."
 end
 
