@@ -1,6 +1,8 @@
 require 'sinatra'
 require 'open-uri'
 require 'json'
+require 'net/http'
+require 'uri'
 use Rack::Logger
 
 access_token = ''
@@ -33,10 +35,9 @@ get '/privacy' do
 end
 
 post '/push' do
-	logger.info params
-	logger.info JSON.parse(params['checkin'])['id']
-	#logger.info params
-	#{}"Pushing ..."
+	checkinID = JSON.parse(params['checkin'])['id']
+	uri = URI.parse("https://api.foursquare.com/v2/checkins/#{checkinID}/addpost")
+	response = Net::HTTP.post_form(uri, {"text" => "Awesomeness!", "url" => "http://badger.herokuapp.com/", "contentId" => "my_ID"})
 end
 
 get '/success' do
