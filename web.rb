@@ -50,7 +50,6 @@ get '/callback' do
   	Users.where(:uid => uid).delete
   	Users.create(:uid => uid, :token => access_token)
 
-  	logger.info user[uid]
   	logger.info Users.where(uid: uid)[:token]
 
   	redirect '/success'
