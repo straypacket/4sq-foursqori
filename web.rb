@@ -47,7 +47,7 @@ get '/callback' do
   	rep_j = JSON.parse(rep)
   	uid = rep_j['response']['user']['id']
 
-  	Users.delete(:uid => uid)
+  	Users.where(:uid => uid).delete
   	Users.create(:uid => uid, :token => access_token)
 
   	logger.info user[uid]
