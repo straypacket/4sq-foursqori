@@ -3,16 +3,32 @@ require 'open-uri'
 require 'json'
 require 'net/https'
 require 'uri'
+require 'yaml'
+require 'mongoid'
+
 use Rack::Logger
 
 user = {}
 user[384595] = '3QMVI0GDT4PV5KTCM105JRDFV4ZDGZ0DS25E1R4CHXOKXE02'
 
+## Configure logger
 helpers do
   def logger
     request.logger
   end
 end
+
+## Connect MongoDB
+def get_connection
+  return @db_connection if @db_connection
+  db = URI.parse(ENV['MONGOHQ_URL'])
+  db_name = db.path.gsub(/^\//, '')
+  @db_connection = Mongo::Connection.new(db.host, db.port).db(db_name)
+  @db_connection.authenticate(db.user, db.password) unless (db.user.nil? || db.user.nil?)
+  @db_connection
+end
+
+db = get_connection
 
 get '/' do
 	"Nothing to see, move along"
@@ -38,6 +54,8 @@ get '/callback' do
   	uid = rep_j['response']['user']['id']
   	user[uid] = access_token
 
+  	logger.info user[uid]
+
   	redirect '/success'
 end
 
@@ -56,7 +74,6 @@ post '/push' do
 	checkinID = JSON.parse(params['checkin'])['id']
 	args = "oauth_token=#{utoken}&v=20130108"
 	url = "https://api.foursquare.com/v2/checkins/#{checkinID}/reply?#{args}"
-	logger.info url
 	uri = URI.parse(url)
 	msg = {"text" => "Advertisement", "url" => "http://badger.herokuapp.com/", "contentId" => "my_ID"}
 

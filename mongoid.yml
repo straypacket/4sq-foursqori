@@ -1,0 +1,8 @@
+development :
+  host: localhost
+  port: 27017
+  database: qori-dev
+production :
+  host: localhost
+  port: 27017
+  database: qori
