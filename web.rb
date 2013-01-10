@@ -38,9 +38,9 @@ get '/callback' do
   	logger.info access_token
 
   	# Get user info
-	req = "https://api.foursquare.com/v2/users/self?oauth_token=#{access_token}"
+	req = "https://api.foursquare.com/v2/users/self?oauth_token=#{access_token}&v=20130108"
   	rep = open(req).read
-  	logger.info rep
+  	logger.info rep['response']
 
   	#user[user_code] = access_token
   	redirect '/success'
