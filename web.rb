@@ -15,6 +15,7 @@ helpers do
 end
 
 get '/' do
+	logger.info params
 	"Nothing to see, move along"
 end
 
