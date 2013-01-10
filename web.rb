@@ -66,10 +66,24 @@ end
 post '/push' do
 	logger.info params
 	# Get user ID
-	uid = JSON.parse(params['user'])['id']
-	logger.info uid
-	utoken = Users.where(uid: uid).first.token
-	logger.info utoken
+	q = JSON.parse(params['user'])['id']
+	if q
+		uid = JSON.parse(params['user'])['id']
+		logger.info uid
+	else
+		logger.info "No user token found!"
+		redirect '/error'
+	end
+
+	# Get user token
+	q = Users.where(uid: uid).first
+	if q
+		utoken = q.token
+		logger.info utoken
+	else
+		logger.info "No user token found!"
+		redirect '/error'
+	end
 
 	#Get checkin ID
 	checkinID = JSON.parse(params['checkin'])['id']
