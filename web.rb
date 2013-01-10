@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'open-uri'
 require 'json'
-require 'net/http'
+require 'net/https'
 require 'uri'
 use Rack::Logger
 
@@ -37,18 +37,17 @@ get '/privacy' do
 end
 
 post '/push' do
-	#checkinID = "50ed1b29e4b07aef2815178e"
+	logger.info params
+
 	checkinID = JSON.parse(params['checkin'])['id']
 	uri = URI.parse("https://api.foursquare.com/v2/checkins/#{checkinID}/reply?oauth_token=#{access_token}&v=20130108")
 	msg = {"text" => "Awesomeness", "url" => "http://badger.herokuapp.com/", "contentId" => "my_ID"}
 
-	logger.info params
-	logger.info "https://api.foursquare.com/v2/checkins/#{checkinID}/reply?oauth_token=#{access_token}&v=20130108"
-
 	http = Net::HTTP.new(uri.host, uri.port)
+	http.use_ssl = true
+	http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 	request = Net::HTTP::Post.new(uri.request_uri)
-	request.set_form_data("text=Awesomeness&url=http://badger.herokuapp.com/")
-	#request["Content-Type"] = "application/json"
+	request.set_form_data(msg)
 	response = http.request(request)
 end
 
