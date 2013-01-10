@@ -50,7 +50,7 @@ get '/callback' do
   	Users.where(:uid => uid).delete
   	Users.create(:uid => uid, :token => access_token)
 
-  	logger.info Users.where(uid: uid).first[:token]
+  	logger.info Users.where(uid: uid).first['token']
 
   	redirect '/success'
 end
@@ -63,7 +63,7 @@ post '/push' do
 	# Get user ID
 	uid = JSON.parse(params['user'])['id']
 	logger.info uid
-	utoken = Users.where(uid: uid).first[:token]
+	utoken = Users.where(uid: uid).first['token']
 	logger.info utoken
 
 	#Get checkin ID
