@@ -39,11 +39,11 @@ end
 post '/push' do
 	#checkinID = "50ed1b29e4b07aef2815178e"
 	checkinID = JSON.parse(params['checkin'])['id']
-	uri = URI.parse("https://api.foursquare.com/v2/checkins/#{checkinID}/addpost?oauth_token=#{access_token}&v=20130108")
+	uri = URI.parse("https://api.foursquare.com/v2/checkins/#{checkinID}/reply?oauth_token=#{access_token}&v=20130108")
 	msg = {"text" => "Awesomeness", "url" => "http://badger.herokuapp.com/", "contentId" => "my_ID"}
 
 	logger.info params
-	logger.info "https://api.foursquare.com/v2/checkins/#{checkinID}/addpost?oauth_token=#{access_token}&v=20130108"
+	logger.info "https://api.foursquare.com/v2/checkins/#{checkinID}/reply?oauth_token=#{access_token}&v=20130108"
 
 	http = Net::HTTP.new(uri.host, uri.port)
 	request = Net::HTTP::Post.new(uri.request_uri)
