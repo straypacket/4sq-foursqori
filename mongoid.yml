@@ -1,4 +1,3 @@
 production:
-  sessions:
-    default:
-      uri: <%= ENV['MONGOHQ_URL'] %>
+  default:
+    uri: <%= ENV['MONGOHQ_URL'] %>
