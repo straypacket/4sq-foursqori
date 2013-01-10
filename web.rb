@@ -3,7 +3,6 @@ require 'open-uri'
 require 'json'
 require 'net/https'
 require 'uri'
-require 'yaml'
 require 'mongoid'
 
 use Rack::Logger
@@ -18,7 +17,7 @@ helpers do
   end
 end
 
-## Connect MongoDB
+## Connect to MongoDB
 def get_connection
   return @db_connection if @db_connection
   db = URI.parse(ENV['MONGOHQ_URL'])
@@ -29,6 +28,7 @@ def get_connection
 end
 
 db = get_connection
+logger.info db.inspect
 
 get '/' do
 	"Nothing to see, move along"
