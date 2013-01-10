@@ -50,6 +50,7 @@ post '/push' do
 	request = Net::HTTP::Post.new(uri.request_uri)
 	request.set_form_data(msg)
 	response = http.request(request)
+	logger.info response
 end
 
 get '/success' do
