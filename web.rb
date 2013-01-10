@@ -18,20 +18,13 @@ helpers do
 end
 
 ## Connect to MongoDB
-def get_connection
-  return @db_connection if @db_connection
-  db = URI.parse(ENV['MONGOHQ_URL'])
-  db_name = db.path.gsub(/^\//, '')
-  @db_connection = Mongo::Connection.new(db.host, db.port).db(db_name)
-  @db_connection.authenticate(db.user, db.password) unless (db.user.nil? || db.user.nil?)
-  @db_connection
-end
+Mongoid.load!("mongoid.yml")
 
 ## Define Mongoid document
 class Users
   include Mongoid::Document
-  field :uid
-  field :token
+  field :uid, :type => String
+  field :token, :type => String
 end 
 
 col = get_connection
@@ -64,7 +57,7 @@ get '/callback' do
   	m_user.save
 
   	logger.info user[uid]
-  	Users.find(:uid => uid)
+  	logger.info Users.find(:uid => uid)
 
   	redirect '/success'
 end
