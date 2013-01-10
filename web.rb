@@ -15,6 +15,7 @@ helpers do
 end
 
 ## Connect to MongoDB
+#Mongoid.load!('./mongoid.yml', :development)
 Mongoid.load!('./mongoid.yml')
 
 ## Define Mongoid document
@@ -41,17 +42,20 @@ get '/callback' do
   	rep_j = JSON.parse(rep)
   	access_token = rep_j['access_token']
 
-  	# Get user info
+  	# Get user ID
 	req = "https://api.foursquare.com/v2/users/self?oauth_token=#{access_token}&v=20130108"
   	rep = open(req).read
   	rep_j = JSON.parse(rep)
   	uid = rep_j['response']['user']['id']
 
+  	# Store user token
   	Users.where(:uid => uid).delete
   	Users.create(:uid => uid, :token => access_token)
 
+  	#Debug
   	logger.info Users.where(uid: uid).first.token
 
+  	# Landing page
   	redirect '/success'
 end
 
@@ -60,6 +64,7 @@ get '/privacy' do
 end
 
 post '/push' do
+	logger.info params
 	# Get user ID
 	uid = JSON.parse(params['user'])['id']
 	logger.info uid
@@ -73,12 +78,15 @@ post '/push' do
 	uri = URI.parse(url)
 	msg = {"text" => "Advertisement", "url" => "http://badger.herokuapp.com/", "contentId" => "my_ID"}
 
+	# Send message
 	http = Net::HTTP.new(uri.host, uri.port)
 	http.use_ssl = true
 	http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 	request = Net::HTTP::Post.new(uri.request_uri)
 	request.set_form_data(msg)
 	response = http.request(request)
+
+	# Debug
 	logger.info response.inspect
 end
 
