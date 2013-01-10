@@ -18,7 +18,7 @@ helpers do
 end
 
 ## Connect to MongoDB
-Mongoid.load!('./mongoid.yml', :development)
+Mongoid.load!('./mongoid.yml')
 
 ## Define Mongoid document
 class Users
