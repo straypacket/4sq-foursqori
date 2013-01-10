@@ -5,8 +5,8 @@ require 'net/https'
 require 'uri'
 use Rack::Logger
 
-access_token = 'Q5XRK2C0HEBTNA0DDVIW3Z1BJVZHSQ3TUO0011HO0SJYA1VZ'
-code = 'ZKB3HQWSYBMGJMUPL1RYJ3NABS5LO3WRHJGLP4TGO0VOQWYR'
+access_token = '1HRDYGIIZBCVETCM1HK0FUEEIPN5RMKBHCEVSH1LNFWYSW30'
+code = 'DBSFFLLX5QPYWEQMKSTK1BEFYIULPZEXUTUNUGCPX13CYC1U'
 user = {}
 
 helpers do
@@ -24,7 +24,9 @@ get '/callback' do
 	cli_id = "TIIWASIOG5LKB11BSVAMHTYBDVLUQDHTTJJHY4WTFBLU3EUQ"
 	cli_sec = "3EW5M1APICBDW1HMHH4LUYH25KTDP4ZWOM3R4TPE1NFFIBRU"
 	red_uri = "http://badger.herokuapp.com/callback"
-	logger.info params
+	user_code = params['code']
+	logger.info user_code
+
 
 	# Make request with params[:code]
 	req = "https://foursquare.com/oauth2/access_token?client_id=#{cli_id}&client_secret=#{cli_sec}&grant_type=authorization_code&redirect_uri=#{red_uri}&code=#{params[:code]}"
@@ -32,6 +34,7 @@ get '/callback' do
   	logger.info rep
   	rep_j = JSON.parse(rep)
   	access_token = rep_j['access_token']
+  	user[user_code] = access_token
   	logger.info access_token
   	redirect '/success'
 end
