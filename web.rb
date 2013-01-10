@@ -27,6 +27,13 @@ def get_connection
   @db_connection
 end
 
+## Define Mongoid document
+class Users
+  include Mongoid::Document
+  field :uid
+  field :token
+end 
+
 col = get_connection
 
 get '/' do
@@ -53,11 +60,11 @@ get '/callback' do
   	uid = rep_j['response']['user']['id']
 
   	user[uid] = access_token
-  	rec = {:uid => uid, :token => access_token}
-  	col.insert(rec)
+  	m_user = Users.new(:uid => uid, :token => access_token)
+  	m_user.save
 
   	logger.info user[uid]
-  	logger.info col.find(:uid => uid)
+  	Users.find(:uid => uid)
 
   	redirect '/success'
 end
