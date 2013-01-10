@@ -7,9 +7,6 @@ require 'mongoid'
 
 use Rack::Logger
 
-user = {}
-user[384595] = '3QMVI0GDT4PV5KTCM105JRDFV4ZDGZ0DS25E1R4CHXOKXE02'
-
 ## Configure logger
 helpers do
   def logger
@@ -50,11 +47,11 @@ get '/callback' do
   	rep_j = JSON.parse(rep)
   	uid = rep_j['response']['user']['id']
 
-  	user[uid] = access_token
-  	m_user = Users.create(:uid => uid, :token => access_token)
+  	Users.delete(:uid => uid)
+  	Users.create(:uid => uid, :token => access_token)
 
   	logger.info user[uid]
-  	logger.info Users.where(uid: uid)
+  	logger.info Users.where(uid: uid)[:token]
 
   	redirect '/success'
 end
