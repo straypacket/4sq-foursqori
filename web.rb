@@ -18,7 +18,7 @@ helpers do
 end
 
 ## Connect to MongoDB
-Mongoid.load!("mongoid.yml")
+Mongoid.load!('./mongoid.yml', :development)
 
 ## Define Mongoid document
 class Users
@@ -26,8 +26,6 @@ class Users
   field :uid, :type => String
   field :token, :type => String
 end 
-
-col = get_connection
 
 get '/' do
 	"Nothing to see, move along"
@@ -53,11 +51,10 @@ get '/callback' do
   	uid = rep_j['response']['user']['id']
 
   	user[uid] = access_token
-  	m_user = Users.new(:uid => uid, :token => access_token)
-  	m_user.save
+  	m_user = Users.create(:uid => uid, :token => access_token)
 
   	logger.info user[uid]
-  	logger.info Users.find(:uid => uid)
+  	logger.info Users.where(uid: uid)
 
   	redirect '/success'
 end
