@@ -40,13 +40,27 @@ get '/callback' do
   	rep = open(req).read
   	logger.info rep
   	rep_j = JSON.parse(rep)
-  	access_token = rep_j['access_token']
+  	q = rep_j['access_token']
+
+  	if q
+  		access_token = q
+  	else
+		logger.info "No access token found!"
+		redirect '/error'
+  	end
 
   	# Get user ID
 	req = "https://api.foursquare.com/v2/users/self?oauth_token=#{access_token}&v=20130108"
   	rep = open(req).read
   	rep_j = JSON.parse(rep)
-  	uid = rep_j['response']['user']['id']
+  	q = rep_j['response']['user']['id']
+
+  	if q
+  		uid = q
+  	else
+		logger.info "No user ID found!"
+		redirect '/error'
+  	end
 
   	# Store user token
   	Users.where(:uid => uid).delete
@@ -71,7 +85,7 @@ post '/push' do
 		uid = JSON.parse(params['user'])['id']
 		logger.info uid
 	else
-		logger.info "No user token found!"
+		logger.info "No user ID found!"
 		redirect '/error'
 	end
 
@@ -86,7 +100,13 @@ post '/push' do
 	end
 
 	#Get checkin ID
-	checkinID = JSON.parse(params['checkin'])['id']
+	q = JSON.parse(params['checkin'])['id']
+	if q
+		checkinID = q
+	else
+		logger.info "No checkin ID found!"
+		redirect '/error'
+	end
 	args = "oauth_token=#{utoken}&v=20130108"
 	url = "https://api.foursquare.com/v2/checkins/#{checkinID}/reply?#{args}"
 	uri = URI.parse(url)
@@ -107,4 +127,9 @@ end
 get '/success' do
 	logger.info params
 	"Congrats, you just linked your account to the amazing Qori app!"
+end
+
+get '/error' do
+	logger.info params
+	"Sorry, there was an error with your request"
 end
