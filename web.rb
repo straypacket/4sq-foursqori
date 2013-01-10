@@ -28,7 +28,6 @@ def get_connection
 end
 
 db = get_connection
-logger.info db.inspect
 
 get '/' do
 	"Nothing to see, move along"
