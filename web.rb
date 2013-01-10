@@ -46,14 +46,16 @@ end
 
 post '/push' do
 	# Get user ID
-	logger.info params
-	uid = '384595'
+	uid = JSON.parse(params['user'])['id']
+	logger.info uid
 	utoken = user['uid']
+	logger.info utoken
 
 	#Get checkin ID
 	checkinID = JSON.parse(params['checkin'])['id']
 	args = "oauth_token=#{utoken}&v=20130108"
 	url = "https://api.foursquare.com/v2/checkins/#{checkinID}/reply?#{args}"
+	logger.info url
 	uri = URI.parse(url)
 	msg = {"text" => "Advertisement", "url" => "http://badger.herokuapp.com/", "contentId" => "my_ID"}
 
