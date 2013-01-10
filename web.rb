@@ -41,8 +41,12 @@ post '/push' do
 	logger.info params
 
 	checkinID = JSON.parse(params['checkin'])['id']
-	uri = URI.parse("https://api.foursquare.com/v2/checkins/#{checkinID}/reply?oauth_token=#{access_token}&v=20130108")
-	msg = {"text" => "Awesomeness", "url" => "http://badger.herokuapp.com/", "contentId" => "my_ID"}
+	args = "oauth_token=#{access_token}&v=20130108"
+	url = "https://api.foursquare.com/v2/checkins/#{checkinID}/reply?#{args}"
+	uri = URI.parse(url)
+	msg = {"text" => "Advertisement", "url" => "http://badger.herokuapp.com/", "contentId" => "my_ID"}
+
+	logger.info url
 
 	http = Net::HTTP.new(uri.host, uri.port)
 	http.use_ssl = true
