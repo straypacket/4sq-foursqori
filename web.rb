@@ -27,7 +27,7 @@ def get_connection
   @db_connection
 end
 
-db = get_connection
+col = get_connection
 
 get '/' do
 	"Nothing to see, move along"
@@ -51,9 +51,13 @@ get '/callback' do
   	rep = open(req).read
   	rep_j = JSON.parse(rep)
   	uid = rep_j['response']['user']['id']
+
   	user[uid] = access_token
+  	rec = {:uid => uid, :token => access_token}
+  	col.insert(rec)
 
   	logger.info user[uid]
+  	logger.info col.find(:uid => uid)
 
   	redirect '/success'
 end
