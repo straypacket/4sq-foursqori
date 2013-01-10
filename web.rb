@@ -6,7 +6,7 @@ require 'uri'
 use Rack::Logger
 
 user = {}
-user['384595'] = '3QMVI0GDT4PV5KTCM105JRDFV4ZDGZ0DS25E1R4CHXOKXE02'
+user[384595] = '3QMVI0GDT4PV5KTCM105JRDFV4ZDGZ0DS25E1R4CHXOKXE02'
 
 helpers do
   def logger
@@ -36,7 +36,7 @@ get '/callback' do
   	rep = open(req).read
   	rep_j = JSON.parse(rep)
   	uid = rep_j['response']['user']['id']
-  	user['uid'] = access_token
+  	user[uid] = access_token
 
   	redirect '/success'
 end
@@ -49,7 +49,7 @@ post '/push' do
 	# Get user ID
 	uid = JSON.parse(params['user'])['id']
 	logger.info uid
-	utoken = user['uid']
+	utoken = user[uid]
 	logger.info utoken
 
 	#Get checkin ID
