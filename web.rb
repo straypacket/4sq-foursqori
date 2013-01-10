@@ -41,9 +41,10 @@ get '/callback' do
 	req = "https://api.foursquare.com/v2/users/self?oauth_token=#{access_token}&v=20130108"
   	rep = open(req).read
   	rep_j = JSON.parse(rep)
-  	logger.info rep_j['response']['user']
+  	uid = rep_j['response']['user']['id']
+  	logger.info uid
 
-  	#user[user_code] = access_token
+  	#user[uid] = access_token
   	redirect '/success'
 end
 
