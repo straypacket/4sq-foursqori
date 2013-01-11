@@ -26,7 +26,7 @@ class Users
 end 
 
 get '/' do
-	link = "http://foursquare.com/oauth2/authenticate?client_id=TIIWASIOG5LKB11BSVAMHTYBDVLUQDHTTJJHY4WTFBLU3EUQ&response_type=code&redirect_uri=http://badger.herokuapp.com/callback"
+	link = "http://foursquare.com/oauth2/authenticate?client_id=TIIWASIOG5LKB11BSVAMHTYBDVLUQDHTTJJHY4WTFBLU3EUQ&response_type=code&redirect_uri=http://foursqori.herokuapp.com/callback"
 	button = "https://playfoursquare.s3.amazonaws.com/press/logo/connect-white.png"
 	"<h1>Welcome to Qori for Foursquare, FoursQori</h1><br>Please press the button below to access awesome deals<br><a href=#{link}><img src=#{button}></a>"
 end
@@ -34,7 +34,7 @@ end
 get '/callback' do
 	cli_id = "TIIWASIOG5LKB11BSVAMHTYBDVLUQDHTTJJHY4WTFBLU3EUQ"
 	cli_sec = "3EW5M1APICBDW1HMHH4LUYH25KTDP4ZWOM3R4TPE1NFFIBRU"
-	redir_uri = "http://badger.herokuapp.com/callback"
+	redir_uri = "http://foursqori.herokuapp.com/callback"
 	user_code = params['code']
 
 	# Get access token
@@ -122,7 +122,7 @@ post '/push' do
   	if rep_j['error']
 		logger.info "No checkin ID found!"
 		redirect '/error'
-		msg = {"text" => "Default advertisement", "url" => "http://badger.herokuapp.com/", "contentId" => "my_ID"}
+		msg = {"text" => "Default advertisement", "url" => "http://foursqori.herokuapp.com/", "contentId" => "my_ID"}
 	else
 		if rep_j['message']
 			msg = {"text" => "rep_j['geo_object']['message']", "url" => "http://geo.skillupjapan.net/#{rep_j['geo_object']['uri']}", "contentId" => "my_ID"}
