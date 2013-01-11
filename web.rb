@@ -40,7 +40,7 @@ get '/' do
 end
 
 get '/callback' do
-	StatsMix.track("Landing page visits", 1)
+	StatsMix.track("Callbacks", 1)
 	cli_id = "TIIWASIOG5LKB11BSVAMHTYBDVLUQDHTTJJHY4WTFBLU3EUQ"
 	cli_sec = "3EW5M1APICBDW1HMHH4LUYH25KTDP4ZWOM3R4TPE1NFFIBRU"
 	redir_uri = "http://foursqori.herokuapp.com/callback"
