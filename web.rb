@@ -109,8 +109,7 @@ post '/push' do
 	end
 
 	#Get geofence
-	logger.info params
-	logger.info params['checkin']['venue']
+	logger.info params['checkin']['venue']['location']
 	lat = 1
 	lon = 2
 	#req = "http://geo.skillupjapan.net/squares/get_random_geo_object?long=#{lat}&lat=#{lon}"
