@@ -123,9 +123,9 @@ post '/push' do
 		msg = {"text" => "Default advertisement", "url" => "http://badger.herokuapp.com/", "contentId" => "my_ID"}
 	else
 		if rep_j['message']
-			msg = {"text" => "rep_j['message']", "url" => "http://geo.skillupjapan.net/#{rep_j['uri']}", "contentId" => "my_ID"}
+			msg = {"text" => "rep_j['geo_object']['message']", "url" => "http://geo.skillupjapan.net/#{rep_j['geo_object']['uri']}", "contentId" => "my_ID"}
 		else
-			msg = {"text" => "Real advertisement for #{rep_j['filename']}", "url" => "http://geo.skillupjapan.net/#{rep_j['uri']}", "contentId" => "my_ID"}
+			msg = {"text" => "Real advertisement for #{rep_j['geo_object']['filename']}", "url" => "http://geo.skillupjapan.net/#{rep_j['geo_object']['uri']}", "contentId" => "my_ID"}
 		end
 	end
 	logger.info msg
