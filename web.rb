@@ -109,7 +109,8 @@ post '/push' do
 
 	#Get geofence
 	location = JSON.parse(params['checkin'])['venue']['location']
-	req = "http://geo.skillupjapan.net/squares/get_random_geo_object?long=#{location['lat']}&lat=#{location['lon']}"
+	logger.info location
+	req = "http://geo.skillupjapan.net/squares/get_random_geo_object?long=#{location['long']}&lat=#{location['lat']}"
 	logger.info req
   	rep = open(req).read
   	rep_j = JSON.parse(rep)
