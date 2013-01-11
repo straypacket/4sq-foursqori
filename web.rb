@@ -107,6 +107,16 @@ post '/push' do
 		logger.info "No checkin ID found!"
 		redirect '/error'
 	end
+
+	#Get geofence
+	logger.info params['checkin']
+	lat = 1
+	lon = 2
+	#req = "http://geo.skillupjapan.net/squares/get_random_geo_object?long=#{lat}&lat=#{lon}"
+  	#rep = open(req).read
+  	#rep_j = JSON.parse(rep)
+
+	# Build message
 	args = "oauth_token=#{utoken}&v=20130108"
 	url = "https://api.foursquare.com/v2/checkins/#{checkinID}/reply?#{args}"
 	uri = URI.parse(url)
