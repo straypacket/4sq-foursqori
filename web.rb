@@ -39,8 +39,8 @@ get '/' do
 	"<h1>Welcome to Qori for Foursquare, FoursQori</h1><br>Please press the button below to access awesome deals<br><a href=#{link}><img src=#{button}></a><br><br>You'll be receiving great deals, privately, after each check-in, just like depicted below:<br><img src=#{shot}>"
 end
 
-get '/callback' 
-	StatsMix.track("Callbacks", 1)
+get '/callback' do
+	StatsMix.track("Landing page visits", 1)
 	cli_id = "TIIWASIOG5LKB11BSVAMHTYBDVLUQDHTTJJHY4WTFBLU3EUQ"
 	cli_sec = "3EW5M1APICBDW1HMHH4LUYH25KTDP4ZWOM3R4TPE1NFFIBRU"
 	redir_uri = "http://foursqori.herokuapp.com/callback"
