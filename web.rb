@@ -5,6 +5,9 @@ require 'net/https'
 require 'uri'
 require 'mongoid'
 
+set :static, true
+set :public_folder, 'public'
+
 use Rack::Logger
 
 ## Configure logger
@@ -28,6 +31,7 @@ end
 get '/' do
 	link = "http://foursquare.com/oauth2/authenticate?client_id=TIIWASIOG5LKB11BSVAMHTYBDVLUQDHTTJJHY4WTFBLU3EUQ&response_type=code&redirect_uri=http://foursqori.herokuapp.com/callback"
 	button = "https://playfoursquare.s3.amazonaws.com/press/logo/connect-white.png"
+	sample = ""
 	"<h1>Welcome to Qori for Foursquare, FoursQori</h1><br>Please press the button below to access awesome deals<br><a href=#{link}><img src=#{button}></a>"
 end
 
@@ -92,7 +96,6 @@ post '/push' do
 	q = Users.where(uid: uid).first
 	if q
 		utoken = q.token
-		logger.info utoken
 	else
 		logger.info "No user token found!"
 		redirect '/error'
