@@ -117,12 +117,16 @@ post '/push' do
   	logger.info rep_j
 
   	msg = {}
-  	if rep_j.error
+  	if rep_j['error']
 		logger.info "No checkin ID found!"
 		redirect '/error'
 		msg = {"text" => "Default advertisement", "url" => "http://badger.herokuapp.com/", "contentId" => "my_ID"}
 	else
-		msg = {"text" => "Real advertisement", "url" => "http://badger.herokuapp.com/", "contentId" => "my_ID"}
+		if rep_j['message']
+			msg = {"text" => "rep_j['message']", "url" => "http://geo.skillupjapan.net/#{rep_j['uri']}", "contentId" => "my_ID"}
+		else
+			msg = {"text" => "Real advertisement for #{rep_j['filename']}", "url" => "http://geo.skillupjapan.net/#{rep_j['uri']}", "contentId" => "my_ID"}
+		end
 	end
 	logger.info msg
 
