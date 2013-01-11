@@ -32,7 +32,7 @@ get '/' do
 	link = "http://foursquare.com/oauth2/authenticate?client_id=TIIWASIOG5LKB11BSVAMHTYBDVLUQDHTTJJHY4WTFBLU3EUQ&response_type=code&redirect_uri=http://foursqori.herokuapp.com/callback"
 	button = "https://playfoursquare.s3.amazonaws.com/press/logo/connect-white.png"
 	shot = "http://foursqori.herokuapp.com/shot.png"
-	"<h1>Welcome to Qori for Foursquare, FoursQori</h1><br>You'll be receiving great deals, privately, after each check-in, just like depicted below:<br><img src=#{shot}><br><br><br>Please press the button below to access awesome deals<br><a href=#{link}><img src=#{button}></a>"
+	"<h1>Welcome to Qori for Foursquare, FoursQori</h1><br><br><br>Please press the button below to access awesome deals<br><a href=#{link}><img src=#{button}></a><br><br>You'll be receiving great deals, privately, after each check-in, just like depicted below:<br><img src=#{shot}>"
 end
 
 get '/callback' do
