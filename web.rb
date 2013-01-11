@@ -78,10 +78,12 @@ get '/privacy' do
 end
 
 post '/push' do
+	params_j = JSON.parse(params)
+
 	# Get user ID
-	q = JSON.parse(params['user'])['id']
+	q = params_j['user']['id']
 	if q
-		uid = JSON.parse(params['user'])['id']
+		uid = q
 		logger.info uid
 	else
 		logger.info "No user ID found!"
@@ -99,7 +101,7 @@ post '/push' do
 	end
 
 	#Get checkin ID
-	q = JSON.parse(params['checkin'])['id']
+	q = params_j['checkin']['id']
 	if q
 		checkinID = q
 	else
@@ -108,7 +110,7 @@ post '/push' do
 	end
 
 	#Get geofence
-	logger.info JSON.parse(params['checkin'])['venue']['location']
+	logger.info params_j['checkin']['venue']['location']
 	lat = 1
 	lon = 2
 	#req = "http://geo.skillupjapan.net/squares/get_random_geo_object?long=#{lat}&lat=#{lon}"
