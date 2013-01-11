@@ -26,7 +26,9 @@ class Users
 end 
 
 get '/' do
-	"Nothing to see, move along"
+	link = "http://foursquare.com/oauth2/authenticate?client_id=TIIWASIOG5LKB11BSVAMHTYBDVLUQDHTTJJHY4WTFBLU3EUQ&response_type=code&redirect_uri=http://badger.herokuapp.com/callback"
+	button = "https://playfoursquare.s3.amazonaws.com/press/logo/connect-white.png"
+	"<h1>Welcome to Qori for Foursquare, FoursQori</h1><br>Please press the button below to access awesome deals<br><a href=#{link}><img src=#{button}></a>"
 end
 
 get '/callback' do
@@ -134,7 +136,7 @@ post '/push' do
 	args = "oauth_token=#{utoken}&v=20130108"
 	url = "https://api.foursquare.com/v2/checkins/#{checkinID}/reply?#{args}"
 	uri = URI.parse(url)
-	
+
 	# Send message
 	http = Net::HTTP.new(uri.host, uri.port)
 	http.use_ssl = true
