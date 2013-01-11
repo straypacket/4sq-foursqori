@@ -40,7 +40,6 @@ get '/callback' do
 	# Get access token
 	req = "https://foursquare.com/oauth2/access_token?client_id=#{cli_id}&client_secret=#{cli_sec}&grant_type=authorization_code&redirect_uri=#{redir_uri}&code=#{user_code}"
   	rep = open(req).read
-  	logger.info rep
   	rep_j = JSON.parse(rep)
   	q = rep_j['access_token']
 
@@ -69,7 +68,7 @@ get '/callback' do
   	Users.create(:uid => uid, :token => access_token)
 
   	#Debug
-  	logger.info Users.where(uid: uid).first.token
+  	#logger.info Users.where(uid: uid).first.token
 
   	# Landing page
   	redirect '/success'
@@ -84,7 +83,6 @@ post '/push' do
 	q = JSON.parse(params['user'])['id']
 	if q
 		uid = JSON.parse(params['user'])['id']
-		logger.info uid
 	else
 		logger.info "No user ID found!"
 		redirect '/error'
@@ -111,12 +109,9 @@ post '/push' do
 
 	#Get geofence
 	location = JSON.parse(params['checkin'])['venue']['location']
-	logger.info location
 	req = "http://geo.skillupjapan.net/squares/get_random_geo_object?long=#{location['lng']}&lat=#{location['lat']}"
-	logger.info req
   	rep = open(req).read
   	rep_j = JSON.parse(rep)
-  	logger.info rep_j
 
   	msg = {}
   	if rep_j['error']
@@ -130,7 +125,6 @@ post '/push' do
 			msg = {"text" => "Real advertisement for #{rep_j['geo_object']['filename']}", "url" => "http://geo.skillupjapan.net/#{rep_j['geo_object']['uri']}", "contentId" => "my_ID"}
 		end
 	end
-	logger.info msg
 
 	# Build message
 	args = "oauth_token=#{utoken}&v=20130108"
@@ -146,15 +140,13 @@ post '/push' do
 	response = http.request(request)
 
 	# Debug
-	logger.info response.inspect
+	#logger.info response.inspect
 end
 
 get '/success' do
-	logger.info params
-	"Congrats, you just linked your account to the amazing Qori app!"
+	"Congrats, you just linked your account to the amazing FoursQori app!"
 end
 
 get '/error' do
-	logger.info params
 	"Sorry, there was an error with your request"
 end
