@@ -109,12 +109,21 @@ post '/push' do
 
 	#Get geofence
 	location = JSON.parse(params['checkin'])['venue']['location']
-	logger.info location
-	lat = 1
-	lon = 2
-	#req = "http://geo.skillupjapan.net/squares/get_random_geo_object?long=#{lat}&lat=#{lon}"
-  	#rep = open(req).read
-  	#rep_j = JSON.parse(rep)
+	req = "http://geo.skillupjapan.net/squares/get_random_geo_object?long=#{location.lat}&lat=#{location.lon}"
+	logger.info req
+  	rep = open(req).read
+  	rep_j = JSON.parse(rep)
+  	logger.info rep_j
+
+  	msg = {}
+  	if rep_j.error
+		logger.info "No checkin ID found!"
+		redirect '/error'
+		msg = {"text" => "Default advertisement", "url" => "http://badger.herokuapp.com/", "contentId" => "my_ID"}
+	else
+		msg = {"text" => "Real advertisement", "url" => "http://badger.herokuapp.com/", "contentId" => "my_ID"}
+	end
+	logger.info msg
 
 	# Build message
 	args = "oauth_token=#{utoken}&v=20130108"
